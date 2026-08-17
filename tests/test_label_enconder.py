@@ -13,3 +13,11 @@ def test_fit_label_encoder():
 
     mapping = {'dog': 0, 'cat': 1, 'bird': 3}
     assert fit_label_encoder(mapping, items) == [1, 1, 0, 0, 3]
+
+
+def test_non_mapped_class():
+    mapping = {'car': 0, 'bike': 1}
+    items = ['car', 'bike', 'airplane']
+
+    # Design choice: return -1 to non-mapped classes
+    assert fit_label_encoder(mapping, items) == [0, 1, -1]
