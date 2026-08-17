@@ -1,2 +1,2 @@
 def fit_label_encoder(mapping: dict[str, int], items: list[str]) -> list[int]:
-    return [0, 0, 1, 1, 3]
+    return [mapping[i] for i in items]
