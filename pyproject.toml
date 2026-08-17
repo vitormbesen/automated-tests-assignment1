@@ -17,4 +17,5 @@ packages = ["src/tdd-assignment"]
 test = [
     "hypothesis>=6.165.10",
     "pytest-cov>=7.1.0",
+    "tdd-assignment>=0.1.0",
 ]

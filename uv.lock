@@ -222,6 +222,7 @@ source = { editable = "." }
 test = [
     { name = "hypothesis" },
     { name = "pytest-cov" },
+    { name = "tdd-assignment" },
 ]
 
 [package.metadata]
@@ -230,4 +231,5 @@ test = [
 test = [
     { name = "hypothesis", specifier = ">=6.165.10" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "tdd-assignment", specifier = ">=0.1.0" },
 ]
