@@ -1,0 +1,28 @@
+name: Test
+on:
+  push:
+    branches:
+      - "main"
+description: Workflow for automatically apply tests to showcase TDD across commits.
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copy code
+        id: copy-code
+        uses: actions/checkout@v7
+
+      # Install UV
+      # --- https://docs.astral.sh/uv/guides/integration/github/#installation
+      - name: Install uv package manager
+        id: install-uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+
+      - name: Create environment for tests
+        run: |
+          uv sync --group test
+
+      # Execute tests
+      - name: Run pytest
+        run: |
+          uv run pytest tests/ -s -vv
