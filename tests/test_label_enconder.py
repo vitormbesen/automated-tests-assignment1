@@ -2,6 +2,8 @@ from hypothesis import given
 from hypothesis import strategies as st
 import pytest
 
+from tdd_assignment import fit_label_encoder
+
 
 def test_fit_label_encoder():
     mapping = {'cat': 0, 'dog': 1, 'bird': 3}
