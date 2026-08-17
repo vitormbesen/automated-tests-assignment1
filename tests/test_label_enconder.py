@@ -21,3 +21,7 @@ def test_non_mapped_class():
 
     # Design choice: return -1 to non-mapped classes
     assert fit_label_encoder(mapping, items) == [0, 1, -1]
+
+    items += ['scooter']
+
+    assert fit_label_encoder(mapping, items) == [0, 1, -1, -1]
