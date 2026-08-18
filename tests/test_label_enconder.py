@@ -25,3 +25,79 @@ def test_non_mapped_class():
     items += ['scooter']
 
     assert fit_label_encoder(mapping, items) == [0, 1, -1, -1]
+
+
+@given(
+    items=st.lists(st.text(min_size=1), min_size=1),
+)
+def test_non_mapped_class_is_minus_1(items):
+    # Property equivalent of `test_non_mapped_class`
+    from tdd_assignment import class_to_idx
+
+    mapping = class_to_idx(items)
+    result = fit_label_encoder(mapping, items)
+
+    expected = []
+    for item in items:
+        try:
+            idx = mapping[item]
+        except KeyError:
+            idx = -1
+        expected.append(idx)
+
+    assert result == expected
+
+
+@given(
+    mapping=st.dictionaries(
+        keys=st.text(min_size=1),
+        values=st.integers(),
+    ),
+    items=st.lists(st.text(min_size=1), min_size=1),
+)
+def test_fit_label_encoder_preserves_length(mapping, items):
+    encoded = fit_label_encoder(mapping, items)
+
+    assert len(items) == len(encoded)
+
+    for item, enc in zip(items, encoded, strict=True):
+        if item in mapping:
+            assert enc == mapping[item]
+        else:
+            assert enc == -1
+
+
+@given(
+    mapping=st.dictionaries(
+        keys=st.text(min_size=1),
+        values=st.integers(),
+    ),
+    items=st.lists(st.text(min_size=1), min_size=1),
+)
+def test_fit_label_encoder_consistency(mapping, items):
+    # If two items list are identical, they should map
+    # to the same numerical value
+    encoded = fit_label_encoder(mapping, items)
+
+    for i in range(len(items)):
+        for j in range(len(items)):
+            if items[i] == items[j]:
+                assert encoded[i] == encoded[j]
+
+
+# --- Label Encoder + Mapping
+@given(
+    items=st.lists(st.text(min_size=1), min_size=1),
+)
+def test_fit_label_encoder_consistency_diff(items):
+    # If two items list are different, they should map
+    # to the different numerical values
+    from tdd_assignment import class_to_idx
+
+    mapping = class_to_idx(items)
+    encoded = fit_label_encoder(mapping, items)
+
+    for i in range(len(items)):
+        for j in range(len(items)):
+            if items[i] in mapping and items[j] in mapping and items[i] != items[j]:
+                assert encoded[i] != encoded[j]
