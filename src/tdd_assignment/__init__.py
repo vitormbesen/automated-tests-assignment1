@@ -3,4 +3,4 @@ def fit_label_encoder(mapping: dict[str, int], items: list[str]) -> list[int]:
 
 
 def class_to_idx(items: list[str]) -> dict[str, int]:
-    return {'dog': 0, 'cat': 1, 'bird': 2}
+    return {item: idx for idx, item in enumerate(sorted(set(items)))}
